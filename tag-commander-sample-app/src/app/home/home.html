@@ -1,0 +1,163 @@
+<h1>Angular TagCommander Sample application</h1>
+<h2>The loading and configuration</h2>
+<h3>The main application configuration</h3>
+<pre>
+<code class="keyword">import</code> <code class="varible">angularJsTagCommander</code> <code class="keyword">from</code> <code class="string">'angularjs-tag-commander'</code>;
+
+<code class="comment">// declar the angularjsTagCommander</code>
+<code class="varible">angular</code>.<code class="method">module</code>(<code class="string">'tag-commander-exemple-app'</code>, [
+    <code class="varible">angularJsTagCommander</code>
+])<code class="varible">.config</code>([<code class="string">'TagCommanderProvider'</code>, (<code class="varible">TagCommanderProvider</code>) => {
+
+    <code class="comment">// you need to provide URIS to load containers script.</code>
+    <code class="comment">// function addContainer (id, uri, node)</code>
+    <code class="varible">TagCommanderProvider</code>.<code class="method">addContainer</code>(<code class="string">'a_name_for_the_container_id'</code>, <code class="string">'/the/path/to/tag-commander-container.js'</code>, <code class="string" >'head'</code>);
+    <code class="comment">// you can add as many container as you like</code>
+
+    <code class="comment">// but you can also remove them</code>
+    <code class="varible">TagCommanderProvider</code>.<code class="method">removeContainer</code>(<code class="string">'my_tag_container_id'</code>);
+
+    <code class="comment">// you can set debug by setting this to true</code>
+    <code class="varible">TagCommanderProvider</code>.<code class="method">setDebug</code>(<code class="keyword">true</code>);
+
+    <code class="comment">// you can track the url of your app by setting this, it will reload the containers on each page change</code>
+    <code class="varible">TagCommanderProvider</code>.<code class="method">trackRoutes</code>(<code class="keyword">true</code>);
+
+    <code class="comment">// you can also set the name of the event witch is triggered the page change,
+    // the default is set to '$routeChangeSuccess'</code>
+    <code class="varible">TagCommanderProvider</code>.<code class="method">setPageEvent</code>(<code class="string">'$stateChangeSuccess'</code>);
+}]);
+</pre>
+<p>
+    In the provider's method 'addContainer', The "node" parameter can either be set to 'body' or 'head', by default the container will be placed in the head.
+</p>
+
+<h3>The routes configuration</h3>
+<p>
+    If you have set TagCommander.trackRoutes(true); in your application configuration, 
+    you can configure witch container will be reloaded on witch route, else what you need to do it in your controller.
+    the containers will be reloaded after the controller has been executed,
+    but if you change or set a varible in your controller methode you will need to call TagCommander.reloadAllContainers(options)
+    to propagate the changes to your containers.
+</p>
+<pre>
+<code class="keyword">export</code> <code class="keyword">const</code> <code class="varible">appRouteProvider</code> = [<code class="string">'$routeProvider'</code>, <code class="string">'$locationProvider'</code>, <code class="keyword">function</code> (<code class="varible">$routeProvider</code>, <code class="varible">$locationProvider</code>) {
+    <code class="varible">$routeProvider</code>
+      .<code class="method">when</code>(<code class="string">'/home'</code>, {
+      <code class="method">controller</code>: <code class="varible">homeComponent</code>,
+      <code class="method">tcReloadOnly</code>: [<code class="string">'4056'</code>, <code class="string">'12'</code>] <code class="comment">// will only reload the container 4056_12</code>
+    })
+    .<code class="method">when</code>(<code class="string">'/shop'</code>, {
+      <code class="method">controller</code>: <code class="varible">shopComponent</code>,
+      <code class="method">tcReloadOnly</code>: [
+        {<code class="method">ids</code>: <code class="string">'4056'</code>, <code class="method">idc</code>: <code class="varible">'12'</code>}, 
+        {<code class="method">ids</code>: <code class="string">'4056'</code>, <code class="method">idc</code>: <code class="varible">'11'</code>, <code class="method">options</code>: 
+          [<code class="string">"datastorage"</code>, <code class="string">"deduplication"</code>] <code class="comment">// you can set the options for your container</code>
+        }
+      ]
+    })
+    .<code class="method">when</code>(<code class="string">'/dashboard'</code>, {
+      <code class="method">controller</code>: <code class="varible">dashboardComponent</code>,
+      <code class="comment">// if no tcReloadOnly is set it will reload all the containers if the trackRoute is true (in the configuration)</code>
+    })
+}];    
+</pre>
+<p>
+    If you don't set the TagCommanderProvider.trackRoutes(true); (or you set it to false) you will have to reload your container manually
+</p>
+<pre>
+<code class="comment">// somewhere in your controller</code>
+<code class="comment">// reload a specifique container</code>
+<code class="varible">TagCommander</code>.<code class="method">reloadContainer</code>(<code class="varible">ids</code>, <code class="varible">idc</code>, <code class="varible">options</code>);
+<code class="comment">// or you can reload all the containers</code>
+<code class="varible">TagCommander</code>.<code class="method">reloadAllContainers</code>(<code class="varible">options</code>);
+</pre>
+
+<h2>How to set your Vars</h2>
+<h3>In your controller</h3>
+<pre>
+<code class="comment">// first of all you need to inject the tagCommander module in your page controller</code>
+<code class="keyword">export default </code>[<code class="string">'$scope'</code>, <code class="string">'TagCommander'</code>, <code class="keyword">function</code> <code class="method">shopController</code>(<code class="varible">TagCommander</code>) {
+
+    <code class="comment">then once in your controller you can set the page varibles. The method set Vars only accept objects</code>
+    <code class="varible">TagCommander</code>.<code class="method">setTcVars</code>({
+        <code class="varible">env_template</code> : <code class="string">"shop"</code>,
+        <code class="varible">env_work</code> : <code class="string">"dev"</code>,
+        <code class="varible">env_language</code> : <code class="string">"en"</code>,
+        <code class="varible">user_id</code> : <code class="string">"124"</code>,
+        <code class="varible">user_logged</code> : <code class="string">"true"</code>,
+        <code class="varible">user_age</code>: <code class="string">"32"</code>,
+        <code class="varible">user_newcustomer</code> : <code class="string">"false"</code>,
+    });
+    <code class="comment">// you can also override some varible</code>
+    <code class="keyword">if </code>(<code class="varible">isNewUser</code>) {
+        <code class="varible">TagCommander</code>.<code class="method">setTcVars</code>({
+            <code class="varible">user_newcustomer</code> : <code class="string">"true"</code>,
+        });
+    }
+    <code class="comment">// or set/update them individualy</code>
+    <code class="varible">TagCommander</code>.<code class="method">setTcVar</code>(<code class="string">'env_template'</code>, <code class="string">'super_shop'</code>);
+}
+</pre>
+
+<h3>Using a directive</h3>
+<p>
+    you can set your tc_vars with a directive that you can implement on the DOM node
+</p>
+<pre>
+&lt;<code class="keyword">html-element</code> <code class="varible">class</code>=<code class="string">"sm-button green-500"</code> <code class="varible">tc-set-vars</code>=<code class="string">'{"env_language": "fr"}'</code>&gt&lt;/<code class="keyword">html-element</code>&gt
+
+<code class="comment">// other exemples</code>
+&lt;<code class="keyword">template</code> <code class="varible">class</code>=<code class="string">"sm-button green-500"</code> <code class="varible">tc-set-vars</code>=<code class="string">'{"env_language": $ctrl.default_language}'</code>&gt&lt;/<code class="keyword">template</code>&gt
+&lt;<code class="keyword">div</code> <code class="varible">class</code>=<code class="string">"sm-button green-500"</code> <code class="varible">tc-set-vars</code>=<code class="string">'{"env_language": $scope.default_language}'</code>&gt&lt;/<code class="keyword">div</code>&gt
+</pre>
+<p>
+    You need to provide the key of your var and it's value. The object provided have to be a JSON between single quote. You can also use your $ctrl and $scope vars, but you do not need to surround them with double quote.
+</p>
+
+<h2>How to get your Vars</h2>
+<h3>In your controller</h3>
+<pre>
+<code class="keyword">var</code> <code class="varible">myVar</code> = <code class="varible">TagCommander</code>.<code class="method">getTcVar</code>(<code class="string">'VarKey'</code>);
+</pre>
+
+<h2>How to remove a Var</h2>
+<p>
+    In your application controller
+</p>
+<pre>
+<code class="varible">TagCommander</code>.<code class="method">removeTcVars</code>(<code class="string">'env_template'</code>);
+</pre>
+
+<h2>How to capture an Event</h2>
+<h3>In your controller</h3>
+<pre>
+<code class="keyword">var</code> <code class="varible">eventId</code> = <code class="string">'1234'</code>;
+<code class="keyword">var</code> <code class="varible">data</code> = <code class="string">'{"env_language": $ctrl.default_language}'</code>;
+
+<code class="varible">TagCommander</code>.<code class="method">captureEvent</code>(<code class="varible">eventId</code>, <code class="varible">data</code>);
+</pre>
+<h3>Using a directive</h3>
+<pre>
+&lt;<code class="keyword">button</code> <code class="varible">class</code>=<code class="string">"sm-button green-500"</code> <code class="varible">tc-event</code>=<code class="string">'{eventId: myEventId, data: {"env_language": $scope.default_language}}'</code>&gt change to default language &lt;/<code class="keyword">button</code>&gt
+</pre>
+
+<h2>How to reload containers</h2>
+<p>
+    When you update your varible you also need to update your container to propagate the changes
+</p>
+<pre>
+<code class="keyword">var</code> <code class="varible">idc</code> = <code class="string">'1234'</code>;
+<code class="keyword">var</code> <code class="varible">ids</code> = <code class="string">'1234'</code>;
+<code class="keyword">var</code> <code class="varible">options</code> = {
+    <code class="varible">exclusions</code>: [
+        <code class="string">"datastorage"</code>,
+        <code class="string">"deduplication"</code>,
+        <code class="string">"internalvars"</code>,
+        <code class="string">"privacy"</code>
+    ]
+}</code>;
+<code class="varible">TagCommander</code>.<code class="method">reloadContainer</code>(<code class="varible">ids</code>, <code class="varible">idc</code>, <code class="varible">options</code>);
+<code class="comment">// or you can reload all the containers</code>
+<code class="varible">TagCommander</code>.<code class="method">reloadAllContainers</code>(<code class="varible">options</code>);
+</pre>

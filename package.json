@@ -1,0 +1,45 @@
+{
+  "name": "angularjs-tag-commander",
+  "version": "1.0.0",
+  "description": "Tag-Commander wrapper for AngularJS",
+  "main": "./src/index.js",
+  "scripts": {
+    "build": "WEBPACK_ENV=build webpack",
+    "start": "WEBPACK_ENV=start webpack --progress --colors --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TagCommander/angular-tag-commander.git"
+  },
+  "keywords": [
+    "analytics",
+    "angular",
+    "angularjs",
+    "angular-js",
+    "commander-act",
+    "tag-commander"
+  ],
+  "author": "Brice GUEGAN",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TagCommander/angular-tag-commander/issues"
+  },
+  "homepage": "https://github.com/TagCommander/angular-tag-commander#readme",
+  "dependencies": {
+    "angular": "^1.7.0",
+    "angular-route": "^1.7.0",
+    "jasmine": "^3.1.0",
+    "karma": "^2.0.2",
+    "karma-jasmine": "^1.1.2",
+    "uglifyjs-webpack-plugin": "^1.2.5"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.6.1",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-minify": "^2.1.0",
+    "webpack-cli": "^2.1.3"
+  }
+}

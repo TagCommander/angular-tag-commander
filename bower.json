@@ -1,0 +1,28 @@
+{
+  "authors": [
+    "Jeremie Lenoir <lenoir.jeremie@oostaoo.com> (https://github.com/jeremielenoir)",
+  ],
+  "name": "angular-tag-commander",
+  "description": "Tag-Commander wrapper for AngularJS",
+  "keywords": [
+    "analytics",
+    "angular",
+    "angularjs",
+    "angular-js",
+    "commander-act",
+    "tag-commander"
+  ],
+  "homepage": "https://github.com/commander-act/angular-tag-commander",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/commander-act/angular-tag-commander"
+  },
+  "main": "./dist/index.es5.min.js",
+  "dependencies": {
+    "angular": ">=1"
+  },
+  "devDependencies": {
+
+  }
+}
