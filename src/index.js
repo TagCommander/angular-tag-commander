@@ -265,7 +265,7 @@
                  * @param {string} varKey
                  */
                 var removeTcVar = function (varKey) {
-                    if (typeof $window.tc_vars[varKey] === 'string') {
+                    if (typeof $window.tc_vars[varKey] === 'string' && typeof $window.tc_vars[varKey] !== 'undefined') {
                         delete $window.tc_vars[varKey];
                     } else {
                         if ($window.tc_vars[varKey] === undefined) {

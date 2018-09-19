@@ -115,9 +115,14 @@ You can use the directive tcSetVars direcly on any html node
 <div class="sm-button green-500" tc-set-vars='{"env_language": $scope.default_language}'></div>
 ```
 ## Get Var
-###In your controller
+### In a controller
 ```js
 var myVar = TagCommander.getTcVar('VarKey');
+```
+## Remove Var
+### In a controller
+```js
+var myVar = TagCommander.removeTcVar('VarKey');
 ```
 
 ## Capture Events
@@ -166,14 +171,14 @@ export const appRouteProvider = ['$routeProvider', '$locationProvider', function
     $routeProvider
         .when('/home', {
         controller: homeComponent,
-        tcReloadOnly: ['4056', '12'] // will only reload the container 4056_12
+        tcReloadOnly: {ids :4056, idc: 12} // will only reload the container 4056_12
     })
     .when('/shop', {
         controller: shopComponent,
         tcReloadOnly: [
-            {ids: '4056', idc: '12'}, 
-            {ids: '4056', idc: '11', options: 
-                ["datastorage", "deduplication"] // you can set the options for your container
+            {ids: 4056, idc: 12}, 
+            {ids: 4056, idc: 11, options: 
+                { exclusions: ["datastorage", "deduplication"] } // you can set the options for your container
             }
         ]
     })

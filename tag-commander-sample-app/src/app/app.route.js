@@ -33,16 +33,15 @@ export const appRouteProvider = ['$routeProvider', '$locationProvider', function
   $routeProvider
    .when('/home', {
     controller: homeComponent,
-    tcReloadOnly: [
-      {ids :'4056', idc: '12'}
-    ]
+    tcReloadOnly: {ids :4056, idc: 12}
   })
   .when('/shop', {
     controller: shopComponent,
     tcReloadOnly: [
-      {ids :'4056', idc: '12'}, 
-      {ids :'4056', idc: '11', options: 
-        ["datastorage", "deduplication"]
+      {ids :4056, idc: 12}, 
+      {ids :4056, idc: 11, options: {
+          exclusions: ["datastorage", "deduplication"]
+        }
       }
     ]
   })
