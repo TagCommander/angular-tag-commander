@@ -140,7 +140,7 @@ TagCommander.captureEvent(eventId, data);
 ```
 
 ## How to reload your container
-When you update your varible you also need to update your container to propagate the changes
+When you update your variable you also need to update your container to propagate the changes
 ```js
 var idc = '1234';
 var ids = '1234';
@@ -164,7 +164,7 @@ you need to set TagCommanderProvider.trackRoutes(true); to true in your app conf
 TagCommanderProvider.trackRoutes(true);
 ```
 
-then you can configure the your route by using the tcRealoadOnly option in your route configuration
+then you can configure the your route by using the tcReloadOnly option in your route configuration
 
 ```js
 export const appRouteProvider = ['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
@@ -199,7 +199,7 @@ TagCommander.reloadAllContainer(options);
 ```
 
 ## Sample app
-To help you with your implementaiton we provided a sample application. to run it
+To help you with your implementation we provided a sample application. to run it
 ```bash
 cd tag-commander-sample-app
 yarn start
