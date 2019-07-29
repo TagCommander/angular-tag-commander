@@ -1,10 +1,10 @@
 /*
- * tagContainer Generator v5
- * Copyright Tag Commander
- * http://www.tagcommander.com/
- * Generated: 2018-05-24 17:13:19 Europe/Paris
+ * tagContainer Generator v26
+ * Copyright Commanders Act
+ * https://www.commandersact.com/fr/
+ * Generated: 2019-07-29 11:23:12 Europe/Paris
  * ---
- * Version	: 1.00
+ * Version	: 1.03
  * IDTC 	: 11
  * IDS		: 4056
  */
@@ -163,7 +163,7 @@ if(typeof tC == 'undefined'){
         };
 
         tC.extend({
-            ssl : (("https:" == document.location.protocol) ? "https://manager." : "http://redirect4056."), //UTILISE ... mais du coup par contre on se retrouve avec des redirectXXX.XXX@tagcommander.com, � nettoyer
+            ssl : "https://manager.",
             randOrd : function(){
                 return (Math.round(Math.random())-0.5);
             },
@@ -343,7 +343,7 @@ tC.extend({
     internalvars           : typeof tC.internalvars != "undefined" ? tC.internalvars : {},
     internalFunctions      : typeof tC.internalFunctions != "undefined" ? tC.internalFunctions : {},
     privacyVersion         : '',
-    containerVersion       : '1.00',
+    containerVersion       : '1.03',
     id_container           : '11',
     id_site                : '4056',
     generatorVersion       : '1.0.0',
@@ -356,7 +356,8 @@ tC_4056_11 = {
     id_container           : '11',
     id_site                : '4056',
     frequency              : '1000',
-    containerVersion       : '1.00',
+    containerVersion       : '1.03',
+    generatorVersion       : 26
 };
 
 tC.extend({
@@ -387,166 +388,106 @@ if (tC.containersLaunched[4056] === undefined) {
     tC.containersLaunched[4056] = {};
 }
 
-tC.containersLaunched[4056][11] = {v:'1.00', t:[]};
+tC.containersLaunched[4056][11] = {v:'1.03', t:[], g:26};
 
 /*extends*/
-/*
 
-tC.extend({
-	isReady : false,
-	readyWait : 1,
-	ready : function(wait) {
-		if (wait === true ? --tC.readyWait : tC.isReady)
-			return;
-		if (!document.body)
-			return setTimeout(tC.ready, 1);
-		tC.isReady = true;
-		if (wait !== true && --tC.readyWait > 0)
-			return;
-		readyList.resolveWith(document, [tC]);
-		if (tC.fn.trigger)
-			tC(document).trigger("ready").off("ready");
-	}
-});
+tC.coreReadyStandalone = true;
+if (tC.isDOMReady) {
+    tC.coreReadyStandalone = false;
+}
 
+tC.domReady = tC.domReady || false;
 
-tC.ready.promise = function(fn){
-    if ( document.addEventListener ) {
-        // Use the handy event callback
-        document.addEventListener( "DOMContentLoaded", function(){
-            document.removeEventListener( "DOMContentLoaded", arguments.callee, false );
-            fn();
-        }, false );
+tC.isDOMReady = tC.isDOMReady || function() {
+    if (document.readyState == 'complete' || document.readyState == 'loaded')
+        return true;
+    if (document.readyState != 'interactive')
+        return false;
+    if (!document.documentElement.doScroll)
+        return true;
+    try {
+        document.documentElement.doScroll('left');
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
 
+tC.waitingOnDomReadyCallBacks = tC.waitingOnDomReadyCallBacks || [];
+
+tC.excuteOnDomReadyCallBacks = tC.excuteOnDomReadyCallBacks || function() {
+    for (var i = 0; i < tC.waitingOnDomReadyCallBacks.length; i++) {
+        tC.waitingOnDomReadyCallBacks[i]();
+    }
+    tC.waitingOnDomReadyCallBacks = [];
+}
+
+tC.onDomReady = tC.onDomReady || function(callback) {
+
+    if(this.domReady){
+        callback();
+        return;
+    }
+
+    tC.waitingOnDomReadyCallBacks.push(callback);
+    var browserTypeSet = false;
+    /* Mozilla, Chrome, Opera */
+    if (document.addEventListener) {
+        browserTypeSet = true;
+        document.addEventListener('DOMContentLoaded', function() {
+            document.removeEventListener("DOMContentLoaded", arguments.callee, false);
+            tC.excuteOnDomReadyCallBacks();
+        }, false);
+    }
     // If IE event model is used
-    } else if ( document.attachEvent ) {
+    else if (document.attachEvent) {
+        browserTypeSet = true;
         // ensure firing before onload,
         // maybe late but safe also for iframes
-        document.attachEvent("onreadystatechange", function(){
-            if ( document.readyState === "complete" ) {
-                document.detachEvent( "onreadystatechange", arguments.callee );
-                fn();
+        document.attachEvent("onreadystatechange", function() {
+            if (document.readyState === "complete") {
+                document.detachEvent("onreadystatechange", arguments.callee);
+                tC.excuteOnDomReadyCallBacks();
             }
         });
 
         // If IE and not an iframe
         // continually check to see if the document is ready
-        if ( document.documentElement.doScroll && window == window.top ) (function(){
-            try {
-                // If IE is used, use the trick by Diego Perini
-                // http://javascript.nwbox.com/IEContentLoaded/
-                document.documentElement.doScroll("left");
-            } catch( error ) {
-                setTimeout( arguments.callee, 0 );
-                return;
-            }
+        if (document.documentElement.doScroll && window == window.top)
+            (function() {
+                if (tC.domReady)
+                    return;
 
-            // and execute any waiting functions
-            fn();
-        })();
-    }
-}
- 
-DOMContentLoaded = function() {
-	if(typeof tC.ready != 'undefined'){
-		if (document.addEventListener) {
-			document.removeEventListener("DOMContentLoaded", DOMContentLoaded, false);
-			tC.ready();
-		} else if (document.readyState === "complete") {
-			document.detachEvent("onreadystatechange", DOMContentLoaded);
-			tC.ready();
-		}
-	}
-};
-*/
-
-
-
-tC.extend({
-    domReady : false,
-    isDOMReady : function() {
-        if (document.readyState == 'complete' || document.readyState == 'loaded')
-            return true;
-        if (document.readyState != 'interactive')
-            return false;
-        if (!document.documentElement.doScroll)
-            return true;
-        try {
-            document.documentElement.doScroll('left');
-            return true;
-        } catch (e) {
-            return false;
-        }
-    },
-    waitingOnDomReadyCallBacks : tC.waitingOnDomReadyCallBacks || [],
-    excuteOnDomReadyCallBacks : function() {
-        for (var i = 0; i < tC.waitingOnDomReadyCallBacks.length; i++) {
-            tC.waitingOnDomReadyCallBacks[i]();
-        }
-        tC.waitingOnDomReadyCallBacks = [];
-    },
-    onDomReady : function(callback) {
-        
-        if(this.domReady){
-            callback();
-            return;
-        }
-        
-        tC.waitingOnDomReadyCallBacks.push(callback);
-        var browserTypeSet = false;
-        /* Mozilla, Chrome, Opera */
-        if (document.addEventListener) {
-            browserTypeSet = true;
-            document.addEventListener('DOMContentLoaded', function() {
-                document.removeEventListener("DOMContentLoaded", arguments.callee, false);
-                tC.excuteOnDomReadyCallBacks();
-            }, false);
-        }
-        // If IE event model is used
-        else if (document.attachEvent) {
-            browserTypeSet = true;
-            // ensure firing before onload,
-            // maybe late but safe also for iframes
-            document.attachEvent("onreadystatechange", function() {
-                if (document.readyState === "complete") {
-                    document.detachEvent("onreadystatechange", arguments.callee);
-                    tC.excuteOnDomReadyCallBacks();
+                try {
+                    // If IE is used, use the trick by Diego Perini
+                    // http://javascript.nwbox.com/IEContentLoaded/
+                    document.documentElement.doScroll("left");
+                } catch( error ) {
+                    setTimeout(arguments.callee, 0);
+                    return;
                 }
-            });
 
-            // If IE and not an iframe
-            // continually check to see if the document is ready
-            if (document.documentElement.doScroll && window == window.top)
-                (function() {
-                    if (tC.domReady)
-                        return;
-
-                    try {
-                        // If IE is used, use the trick by Diego Perini
-                        // http://javascript.nwbox.com/IEContentLoaded/
-                        document.documentElement.doScroll("left");
-                    } catch( error ) {
-                        setTimeout(arguments.callee, 0);
-                        return;
-                    }
-
-                    // and execute any waiting functions
-                    tC.excuteOnDomReadyCallBacks();
-                })();
-        }
-        /* Other web browsers */
-        if (!browserTypeSet) {
-            window.onload = tC.excuteOnDomReadyCallBacks;
-        }
+                // and execute any waiting functions
+                tC.excuteOnDomReadyCallBacks();
+            })();
     }
-});
-if(tC.isDOMReady()){
-    tC.domReady = true;
-}else{
-    tC.onDomReady(function() {
-        tC.domReady = true;
-    });
+    /* Other web browsers */
+    if (!browserTypeSet) {
+        window.onload = tC.excuteOnDomReadyCallBacks;
+    }
 }
+
+if (tC.coreReadyStandalone === true) {
+    if(tC.isDOMReady()){
+        tC.domReady = true;
+    }else{
+        tC.onDomReady(function() {
+            tC.domReady = true;
+        });
+    }
+}
+
 /*
  * 
  */
@@ -575,34 +516,34 @@ tC.extend({
  * @vars 
  */
 
-tC.extend({
-    pixelTrack : {
-        add : function(u, t) {
-            u = u || 0;
-            t = t || 'img';
-            tC.onDomReady(function() {
-                if(t == "iframe"){
-                    var d = document.createElement(t);
-                    d.src = u;
-                    d.width = 1;
-                    d.height = 1;
-                    d.style.display = "none"
-                    document.body.appendChild(d);
-                }else{
-                    var d = new Image();
-                    d.src = u;
-                }
-            });
-        }
+tC.pixelTrack = tC.pixelTrack || {
+    add : function(u, t) {
+        u = u || 0;
+        t = t || 'img';
+        tC.onDomReady(function() {
+            if(t == "iframe"){
+                var d = document.createElement(t);
+                d.src = u;
+                d.width = 1;
+                d.height = 1;
+                d.style.display = "none"
+                document.body.appendChild(d);
+            }else{
+                var d = new Image();
+                d.src = u;
+            }
+        });
     }
-});
+};
+
 /*
  * Extension domain
  */
 
-tC.extend({
-    tc_hdoc : false,
-    domain : function() {
+tC.tc_hdoc = tC.tc_hdoc || false;
+
+if (!tC.domain) {
+    tC.domain = function() {
         this.tc_hdoc = document;
         try {
             try{
@@ -629,9 +570,31 @@ tC.extend({
             tC.log(['tC.domain error : ',e], 'warn');
         }
     }
-});
 
-tC.domain();
+    tC.domain();
+}
+
+/*
+ * Extension cookie common
+ *
+ * tC.setCookie(name, value, expires, path, domain, secure)
+ */
+
+tC.setCookie = tC.setCookie || function(name, value, expires, path, domain, secure) {
+    if (!domain)
+        domain = tC.domain();
+    var today = new Date();
+        today.setTime(today.getTime());
+    if (expires)
+        expires = expires * 1000 * 60 * 60 * 24;
+    var expires_date = new Date(today.getTime() + (expires));
+    document.cookie = name + "=" + escape(value) + ((expires ) ? ";expires=" + expires_date.toGMTString() : "" ) + ((path ) ? ";path=" + path : ";path=/" ) + ((domain ) ? ";domain=" + domain : "" ) + ((secure ) ? ";secure" : "" );
+}
+
+tC.getCookie = tC.getCookie || function(key) {
+    return (result = new RegExp('(?:^|; )' + encodeURIComponent(key) + '=([^;]*)').exec(document.cookie)) ? unescape(result[1]) : ""
+}
+
 /*
  * Extension cookie
  * 
@@ -642,44 +605,9 @@ tC.extend({
     removeCookie : function(name){
         //document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
         this.setCookie(name,'',-1);
-    },
-    setCookie : function(name, value, expires, path, domain, secure) {
-        if (!domain)
-            domain = tC.domain();
-        var today = new Date();
-            today.setTime(today.getTime());
-        if (expires)
-            expires = expires * 1000 * 60 * 60 * 24;
-        var expires_date = new Date(today.getTime() + (expires));
-        document.cookie = name + "=" + escape(value) + ((expires ) ? ";expires=" + expires_date.toGMTString() : "" ) + ((path ) ? ";path=" + path : ";path=/" ) + ((domain ) ? ";domain=" + domain : "" ) + ((secure ) ? ";secure" : "" );
-    },
-    getCookie : function(key) {
-        return (result = new RegExp('(?:^|; )' + encodeURIComponent(key) + '=([^;]*)').exec(document.cookie)) ? unescape(result[1]) : ""
-    }/* 
-    
-    V2 soon -->
-    ,
-    setCookie(n,v,e,d){
-        var D=new Date();
-        D.setDate(e.getDate() + e);
-        var V=escape(v) + ((e===null) ? "" : "; expires="+D.toUTCString());
-        document.cookie=n + "=" + V + "; domain=" + ((d===undefined) ? "" : d);
     }
-    
-    
-    
-    ,
-    getCookie : function(n){
-        var i,x,y,c=document.cookie.split(";");
-        for(i=0;i < c.length; i++) {
-            x=c[i].substr(0,c[i].indexOf("="));
-            y=c[i].substr(c[i].indexOf("=")+1);
-            x=x.replace(/^\s+|\s+$/g,"");
-            if (x===n)
-                return unescape(y);
-        }
-    }*/
 });
+
 /*
  * Extension storage
  *
@@ -732,7 +660,7 @@ tC.extend({
      */
     hitCounter_4056_11 : function() {
         if(Math.floor(Math.random()*parseInt(tC_4056_11.frequency)) == 0){
-            tC.pixelTrack.add("//manager.tagcommander.com/utils/hit.php?id="+tC_4056_11.id_container+"&site="+tC_4056_11.id_site+"&version="+tC_4056_11.containerVersion+"&frequency="+tC_4056_11.frequency+"&position="+tC.container_position+"&rand="+Math.random());
+            tC.pixelTrack.add("https://manager.tagcommander.com/utils/hit.php?id="+tC_4056_11.id_container+"&site="+tC_4056_11.id_site+"&version="+tC_4056_11.containerVersion+"&frequency="+tC_4056_11.frequency+"&position="+tC.container_position+"&rand="+Math.random());
         }
     }
 });
@@ -800,7 +728,7 @@ tC.extend({
         //call reach
         cR : function (now) {
             tC.storage.set("tC_Sync", now); //stockage dans le localstorage
-            tC.pixelTrack.add("//engage.commander1.com/reach?tc_s=4056");
+            tC.pixelTrack.add("https://engage.commander1.com/reach?tc_s=4056");
         },
         //run reach
         rR : function () {
@@ -823,33 +751,68 @@ tC.extend({
 
 });
 
-tC.extend({
-    event: {
-        add_to_cart: function(el, p){
-
+tC.event = tC.event || {};
+tC.event.add_to_cartListFunctions = tC.event.add_to_cartListFunctions || [];
+tC.event.add_to_cartListIdTags = tC.event.add_to_cartListIdTags || [];
+if (tC.event.add_to_cartListIdTags.indexOf("59")==-1){
+    tC.event.add_to_cartListIdTags.push("59");
+    tC.event.add_to_cartListFunctions.push(function(el, p){
+    
         tC.executeTag59_4056_11(el, p);
-        tC.launchTag(59, 'Universal Analytics - eCommerce Enhanced - Conversion', 1477, 4056, 11, 11);        },
-remove_from_cart: function(el, p){
+        tC.launchTag(59, 'Universal Analytics - eCommerce Enhanced - Conversion', 1477, 4056, 11, 11);});
+}
+tC.event.add_to_cart=function(el, p){
+tc_array_events=tC.container_4056_11.init_tc_array_events(p);
+for(var i=0,x=tC.event.add_to_cartListFunctions.length;i<x;i++){
+tC.event.add_to_cartListFunctions[i](el, p);
+}
+};
 
+tC.event.remove_from_cartListFunctions = tC.event.remove_from_cartListFunctions || [];
+tC.event.remove_from_cartListIdTags = tC.event.remove_from_cartListIdTags || [];
+if (tC.event.remove_from_cartListIdTags.indexOf("59")==-1){
+    tC.event.remove_from_cartListIdTags.push("59");
+    tC.event.remove_from_cartListFunctions.push(function(el, p){
+    
         tC.executeTag59_4056_11(el, p);
-        tC.launchTag(59, 'Universal Analytics - eCommerce Enhanced - Conversion', 1477, 4056, 11, 12);        },
-cart_checkout: function(el, p){
+        tC.launchTag(59, 'Universal Analytics - eCommerce Enhanced - Conversion', 1477, 4056, 11, 12);});
+}
+tC.event.remove_from_cart=function(el, p){
+tc_array_events=tC.container_4056_11.init_tc_array_events(p);
+for(var i=0,x=tC.event.remove_from_cartListFunctions.length;i<x;i++){
+tC.event.remove_from_cartListFunctions[i](el, p);
+}
+};
 
+tC.event.cart_checkoutListFunctions = tC.event.cart_checkoutListFunctions || [];
+tC.event.cart_checkoutListIdTags = tC.event.cart_checkoutListIdTags || [];
+if (tC.event.cart_checkoutListIdTags.indexOf("59")==-1){
+    tC.event.cart_checkoutListIdTags.push("59");
+    tC.event.cart_checkoutListFunctions.push(function(el, p){
+    
         tC.executeTag59_4056_11(el, p);
-        tC.launchTag(59, 'Universal Analytics - eCommerce Enhanced - Conversion', 1477, 4056, 11, 13);        }
-    }
-});
+        tC.launchTag(59, 'Universal Analytics - eCommerce Enhanced - Conversion', 1477, 4056, 11, 13);});
+}
+tC.event.cart_checkout=function(el, p){
+tc_array_events=tC.container_4056_11.init_tc_array_events(p);
+for(var i=0,x=tC.event.cart_checkoutListFunctions.length;i<x;i++){
+tC.event.cart_checkoutListFunctions[i](el, p);
+}
+};
+
 
 tC.extend({
     container: {
         reload: function(){
             var params = arguments[0];
+            tC.reload_events = true;
             tC.container_position = 0;
 
             if(tC.containerList){
                 tC.each(tC.containerList, function(index, value) {
                     if(typeof tC['container_'+value] == "object" && typeof tC['container_'+value].reload == "function") {
                         tC['container_' + value].reload(params, true);
+                        tC.reload_events = false;
                     }
                 });
             }
@@ -861,13 +824,15 @@ tC.extend({
     container_4056_11: {
         /**
          * Load container elements
-         * @param {object} params Parameters of the load (list of exclusions, custom functions to call…) ; ex.: {exclusions:["datastorage", "internalvars"], customFunctions:[]}
+         * @param {object} params Parameters of the load (list of exclusions, tC.event functions to call…) ; ex.: {exclusions:["datastorage", "internalvars"], events:{function1:["paramF1"],function2:["param1F2", "param2F2"]}}
          * @param {boolean} [isReload] false (default) for the first load, true for a reload
          */
         load: function(params, isReload){
             tC.container_position++;
             tC.hitCounter_4056_11();
             this.datalayer();
+            tC.array_launched_tags = [];
+            tC.array_launched_tags_keys = [];
 
             if(typeof params != "object"){
                 params = {};
@@ -901,7 +866,20 @@ tC.extend({
                 this.eventlisteners();
             }
 
-            //TODO: manage customFunctions (events)
+            if (tC.reload_events === false || typeof params.events == "undefined") {
+                params.events = {};
+            }
+
+            //Each params.events is an object with name of the function in key and an array of parameters in value, for example: {function1:["param1", "param2"]}
+            tC.each(params.events, function (k, v) {
+                if (typeof tC.event[k] == 'function' && v.length > 0) {//we check if there is a tC.event corresponding, with at least 1 parameter
+                    if (typeof v[1] == 'undefined') {//2nd parameter is not set, we don't send it to the tC.event custom function
+                        tC.event[k](v[0]);
+                    } else {
+                        tC.event[k](v[0], v[1]);
+                    }
+                }
+            });
         },
 
         reload: function(params, isGlobalReload){
@@ -911,6 +889,7 @@ tC.extend({
 
             if(!isGlobalReload){
                 tC.container_position = 0;
+                tC.reload_events = true;
             }
 
             this.load(arguments[0], true);
@@ -960,9 +939,10 @@ tC.extend({
         },
 
         internalvars: function(){
-            if(tC.internalvars_4056.listVar.length > 0){
-                for(var k in tC.internalvars_4056.listVar){
-                    tC.internalvars_4056.initiators['var'+tC.internalvars_4056.listVar[k]]();
+            var listInternalVars = tC.internalvars_4056.listVar;
+            if(listInternalVars.length > 0){
+                for (var i = 0; i < listInternalVars.length; i++) {
+                    tC.internalvars_4056.initiators['var'+listInternalVars[i]]();
                 }
             }
 
@@ -976,7 +956,10 @@ tC.extend({
         },
 
         init_tc_array_events: function(t){
-            var l = 'product_cat1_name|product_cat2_name|product_cat3_name|product_qty|basket_id|product_name|product_unitprice|product_discount|product_url_img|product_id|id'.split('|');
+            if (typeof t == "undefined") {
+                t = {};
+            }
+            var l = 'product_id|product_name|product_unitprice|product_discount|product_url_img|product_cat1_name|product_cat2_name|product_cat3_name|product_qty|basket_id|id'.split('|');
             for (var k in l) {
                 if (!t.hasOwnProperty(l[k])) {
                     t[l[k]] = '';
@@ -989,36 +972,31 @@ tC.extend({
 });
 if(typeof tC.containerList == "undefined"){tC.containerList = [];}
 tC.containerList.push("4056_11");
-tC.onDomReady(function() {
-    tC.container_4056_11.eventlisteners();
-});
 window.tc_array_events = tC.container_4056_11.init_tc_array_events([]);
 
 
 
 tC4056_11 = tC;
- 
-/* RETRO COMPATIBILITY FUNCTIONS */
 
+window.postMessage('TC.EX.CONTAINER:{"id":11,"ids":4056,"v":"1.03","g":26,"p":'+tC.container_position+',"url":"'+(document.currentScript ? document.currentScript.src : '')+'"}','*');
 
-tC.container_4056_11.datalayer();
+tC.container_4056_11.datalayer();tC.array_launched_tags=[];tC.array_launched_tags_keys=[];
 
 /*DYNAMIC JS BLOCK 1*/
-
 
 /*END DYNAMIC JS BLOCK 1*/
 
 /*CUSTOM_JS_BLOCK1*/
 
 /*END_CUSTOM_JS_BLOCK1*/
-tC.array_launched_tags=[];tC.array_launched_tags_keys=[];tC.id_site='4056';if(tC.getCookie('tc_mode_test')==1){(function(){var tc_testmodescriptload=document.createElement('script');tc_testmodescriptload.type='text/javascript';tc_testmodescriptload.src='//manager.tagcommander.com/utils/test_mode_include.php?id=11&site=4056&type=load&rand='+Math.random()+'&version=';(document.getElementsByTagName('body')[0]||document.getElementsByTagName('head')[0]||document.getElementsByTagName('script')[0].parentNode).appendChild(tc_testmodescriptload);})();}else{
+if(tC.privacyCookieDisallowed){tC.setCookie('TCPID','',-1,'',tC.domain());}
+tC.id_site='4056';if(tC.getCookie('tc_mode_test')==1){(function(){var tc_testmodescriptload=document.createElement('script');tc_testmodescriptload.type='text/javascript';tc_testmodescriptload.src='//manager.tagcommander.com/utils/test_mode_include.php?id=11&site=4056&type=load&rand='+Math.random()+'&version=';(document.getElementsByTagName('body')[0]||document.getElementsByTagName('head')[0]||document.getElementsByTagName('script')[0].parentNode).appendChild(tc_testmodescriptload);})();}else{
 /*VARIABLES_BLOCK*/
 tC.internalvars_4056.initiators={};tC.internalvars_4056.listVar=[];
 /*END_VARIABLES_BLOCK*/
 
 
 /*DYNAMIC JS BLOCK 2*/
-
 
 /*END DYNAMIC JS BLOCK 2*/
 
@@ -1034,8 +1012,10 @@ tC.container_4056_11.datastorage();}
 
 //----
 
-if(tC.getCookie('tc_mode_test')==1){(function(){var tc_testmodescriptexec=document.createElement('script');tc_testmodescriptexec.type='text/javascript';tc_testmodescriptexec.src='//manager.tagcommander.com/utils/test_mode_include.php?id=11&site=4056&type=exec&rand='+Math.random()+'&version=1.00';(document.getElementsByTagName('body')[0]||document.getElementsByTagName('head')[0]||document.getElementsByTagName('script')[0].parentNode).appendChild(tc_testmodescriptexec);})();(function(){setTimeout(function(){if(typeof top.tc_count!=='undefined'){top.tc_count++;}else{top.tc_count=1;}var tc_newscript=document.createElement('script');tc_newscript.type='text/javascript';tc_newscript.src='//manager.tagcommander.com/utils/livetest/bookmarklet.php?r='+Math.random()+'&nb='+top.tc_count+'&container=4056!11&version=1.00';(document.getElementsByTagName('body')[0]||document.getElementsByTagName('head')[0]||document.getElementsByTagName('script')[0].parentNode).appendChild(tc_newscript);},1000);})();}else{tC.launchTag(59,'Universal Analytics - eCommerce Enhanced - Conversion',1477,4056,11,10);if(typeof ga!="undefined"){ga('require','ec');var temp_concat=tc_vars["product_list"];for(var i=0;i<temp_concat.length;i++){var product=temp_concat[i];ga('ec:addProduct',{'id':product[tc_vars["product_id"]],'name':product[tc_vars["product_name"]],'sku':product[tc_vars["product_SKU"]],'category':product[tc_vars["product_cat"]],'price':product[tc_vars["product_unitprice"]],'quantity':product[tc_vars["product_quantity"]],'brand':product[tc_vars["product_brand"]]});}
+if(tC.getCookie('tc_mode_test')==1){(function(){var tc_testmodescriptexec=document.createElement('script');tc_testmodescriptexec.type='text/javascript';tc_testmodescriptexec.src='//manager.tagcommander.com/utils/test_mode_include.php?id=11&site=4056&type=exec&rand='+Math.random()+'&version=1.03';(document.getElementsByTagName('body')[0]||document.getElementsByTagName('head')[0]||document.getElementsByTagName('script')[0].parentNode).appendChild(tc_testmodescriptexec);})();(function(){setTimeout(function(){if(typeof top.tc_count!=='undefined'){top.tc_count++;}else{top.tc_count=1;}var tc_newscript=document.createElement('script');tc_newscript.type='text/javascript';tc_newscript.src='//manager.tagcommander.com/utils/livetest/bookmarklet.php?r='+Math.random()+'&nb='+top.tc_count+'&container=4056!11&version=1.03';(document.getElementsByTagName('body')[0]||document.getElementsByTagName('head')[0]||document.getElementsByTagName('script')[0].parentNode).appendChild(tc_newscript);},1000);})();}else{tC.launchTag(59,'Universal Analytics - eCommerce Enhanced - Conversion',1477,4056,11,10);if(typeof ga!="undefined"){ga('require','ec');var temp_concat=tc_vars["product_list"];for(var i=0;i<temp_concat.length;i++){var product=temp_concat[i];ga('ec:addProduct',{'id':product[tc_vars["product_id"]],'name':product[tc_vars["product_name"]],'sku':product[tc_vars["product_SKU"]],'category':product[tc_vars["product_cat"]],'price':product[tc_vars["product_unitprice"]],'quantity':product[tc_vars["product_quantity"]],'brand':product[tc_vars["product_brand"]]});}
 ga('ec:setAction','purchase',{'id':tc_vars["order__id"],'affiliation':tc_vars["affiliate"],'revenue':tc_vars["order_amount"],'shipping':tc_vars["shipping"],'tax':tc_vars["tax"]});}
 tC.extend({executeTag59_4056_11:function(el,p){if(typeof p=="undefined"){p={};}
 tc_array_events=tC.container_4056_11.init_tc_array_events(p);if(typeof ga!="undefined"){ga('require','ec');var temp_concat=tc_vars["product_list"];for(var i=0;i<temp_concat.length;i++){var product=temp_concat[i];ga('ec:addProduct',{'id':product[tc_vars["product_id"]],'name':product[tc_vars["product_name"]],'sku':product[tc_vars["product_SKU"]],'category':product[tc_vars["product_cat"]],'price':product[tc_vars["product_unitprice"]],'quantity':product[tc_vars["product_quantity"]],'brand':product[tc_vars["product_brand"]]});}
 ga('ec:setAction','purchase',{'id':tc_vars["order__id"],'affiliation':tc_vars["affiliate"],'revenue':tc_vars["order_amount"],'shipping':tc_vars["shipping"],'tax':tc_vars["tax"]});}}});}
+function tc_events_11(tc_elt,tc_id_event,tc_array_events){tc_array_events["id"]=tc_id_event;(function(){var l='product_id|product_name|product_unitprice|product_discount|product_url_img|product_cat1_name|product_cat2_name|product_cat3_name|product_qty|basket_id|id'.split('|');for(var k in l){if(!tc_array_events.hasOwnProperty(l[k])){tc_array_events[l[k]]='';}}})();if(tc_array_events["id"]=='18'){tC.launchTag('e18','add_to_cart','-1','4056','11');}}
+tC.onDomReady(function(){tC.container_4056_11.eventlisteners();});
