@@ -14,7 +14,7 @@
     "lint": "eslint src/ && htmlhint src/ && sass-lint -v"
   },
   "dependencies": {
-    "angular": "^1.6.0",
+    "angular": "^1.8.0",
     "angular-animate": "^1.6.0",
     "angular-aria": "^1.6.0",
     "angular-material": "^1.1.1",
